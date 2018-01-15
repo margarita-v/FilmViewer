@@ -26,6 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:iconifiedByDefault="false"
+                app:searchIcon="@drawable/ic_search"
+                app:closeIcon="@drawable/ic_lose"
                 app:queryHint="Поиск по названию фильма"/>
 
         </android.support.v7.widget.CardView>
