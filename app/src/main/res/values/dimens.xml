@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="common_margin">8dp</dimen>
+    <dimen name="card_view_radius">25dp</dimen>
+</resources>
