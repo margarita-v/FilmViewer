@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">FilmViewer</string>
     <string name="action_settings">Settings</string>
+    <string name="refresh">Refresh</string>
+    <string name="loading_error">Loading error</string>
+    <string name="loading_message">Нам не удалось обработать ваш запрос. Попробуйте еще раз</string>
+    <string name="empty_search">По запросу \"%1$s\" ничего не найдено</string>
 </resources>

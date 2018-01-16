@@ -1,5 +1,15 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="common_margin">8dp</dimen>
+    <!-- Sizes of widgets -->
+    <dimen name="fab_size">56dp</dimen>
     <dimen name="card_view_radius">25dp</dimen>
+    <dimen name="progress_bar_size">28dp</dimen>
+
+    <!-- Margin values -->
+    <dimen name="fab_margin">16dp</dimen>==
+    <dimen name="common_margin">8dp</dimen>
+    <dimen name="text_view_margin">56dp</dimen>
+    <dimen name="text_view_margin_top">33dp</dimen>
+
+    <!-- Font sizes -->
+    <dimen name="font_size_big">16sp</dimen>
 </resources>
