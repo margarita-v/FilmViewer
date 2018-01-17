@@ -1,5 +1,6 @@
 package com.margarita.filmviewer.rest
 
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -25,10 +26,14 @@ class RestClient {
                 .addInterceptor(ApiKeyInterceptor())
                 .build()
 
+        val gson = GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
+
         retrofit = Retrofit.Builder()
                 .client(httpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(BASE_URL)
                 .build()
     }
