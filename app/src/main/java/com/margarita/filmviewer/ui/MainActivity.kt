@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         searchView.setBackgroundResource(R.color.colorBackground)
         val editText = searchView.findViewById(R.id.search_src_text) as EditText
         editText.setHintTextColor(getColorResource(R.color.colorHint))
-        editText.setTextColor(getColorResource(R.color.colorQuery))
+        editText.setTextColor(getColorResource(R.color.colorTitle))
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

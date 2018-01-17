@@ -9,7 +9,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_margin">
+        android:layout_margin="@dimen/margin8">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,53 +27,55 @@
                 android:id="@+id/layoutContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_above="@id/layoutFooter"
                 android:layout_toRightOf="@id/imageView"
                 android:layout_toEndOf="@id/imageView"
-                android:layout_marginLeft="@dimen/photo_margin_right"
-                android:layout_marginStart="@dimen/photo_margin_right"
-                android:layout_marginTop="@dimen/content_margin"
-                android:layout_marginRight="17dp"
-                android:layout_marginEnd="17dp">
+                android:layout_marginLeft="@dimen/margin15"
+                android:layout_marginStart="@dimen/margin15"
+                android:layout_marginTop="@dimen/margin12"
+                android:layout_marginRight="@dimen/margin17"
+                android:layout_marginEnd="@dimen/margin17">
 
                 <TextView
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/common_margin"
+                    android:layout_marginBottom="@dimen/margin8"
                     android:maxLines="2"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/font_size22"
                     android:fontFamily="sans-serif-medium"
                     android:textStyle="normal"
-                    android:textColor="#de000000"
-                    android:lineSpacingExtra="6sp"
+                    android:textColor="@color/colorTitle"
+                    android:lineSpacingExtra="@dimen/line_spacing"
                     tools:text="Бегущий по лезвию 2049" />
 
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/margin10"
                     android:layout_below="@id/tvName"
-                    android:maxLines="2"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_size14"
                     android:fontFamily="sans-serif"
                     android:textStyle="normal"
-                    android:textColor="#8b000000"
-                    android:lineSpacingExtra="6sp"
+                    android:textColor="@color/colorDescription"
+                    android:lineSpacingExtra="@dimen/line_spacing"
                     tools:text="Отставной детектив Рик Декард вновь восстановлен в полиции Лос-Анджелеса для поиска возглавляемой Роем Батти группы киборгов, совершившей побег из космической колонии на Землю." />
             </RelativeLayout>
 
             <!-- Footer -->
             <RelativeLayout
+                android:id="@+id/layoutFooter"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_below="@id/layoutContent"
+                android:layout_height="@dimen/footer_height"
                 android:layout_toRightOf="@id/imageView"
                 android:layout_toEndOf="@id/imageView"
-                android:layout_marginLeft="11dp"
-                android:layout_marginStart="11dp"
-                android:layout_marginRight="@dimen/content_margin"
-                android:layout_marginEnd="@dimen/content_margin"
-                android:paddingBottom="@dimen/content_margin"
+                android:layout_marginLeft="@dimen/margin11"
+                android:layout_marginStart="@dimen/margin11"
+                android:layout_marginRight="@dimen/margin12"
+                android:layout_marginEnd="@dimen/margin12"
+                android:paddingBottom="@dimen/margin12"
                 android:layout_alignParentBottom="true">
 
                 <ImageView
@@ -90,15 +92,15 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/icon"
                     android:layout_toEndOf="@id/icon"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginTop="@dimen/margin4"
+                    android:layout_marginBottom="@dimen/margin4"
+                    android:layout_marginLeft="@dimen/margin2"
+                    android:layout_marginRight="@dimen/margin2"
                     android:layout_alignParentBottom="true"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/font_size14"
                     android:fontFamily="sans-serif"
                     android:textStyle="normal"
-                    android:textColor="#8b000000"
+                    android:textColor="@color/colorDescription"
                     tools:text="1 января 2017" />
 
                 <ImageView
@@ -113,5 +115,6 @@
                     android:layout_alignParentBottom="true" />
             </RelativeLayout>
         </RelativeLayout>
+
     </android.support.v7.widget.CardView>
 </RelativeLayout>

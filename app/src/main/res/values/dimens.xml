@@ -3,17 +3,26 @@
     <dimen name="fab_size">56dp</dimen>
     <dimen name="card_view_radius">25dp</dimen>
     <dimen name="progress_bar_size">28dp</dimen>
+    <dimen name="footer_height">36dp</dimen>
     <dimen name="photo_width">120dp</dimen>
     <dimen name="photo_height">183dp</dimen>
 
     <!-- Margin values -->
     <dimen name="fab_margin">16dp</dimen>==
-    <dimen name="common_margin">8dp</dimen>
     <dimen name="text_view_margin">56dp</dimen>
     <dimen name="text_view_margin_top">33dp</dimen>
-    <dimen name="photo_margin_right">15dp</dimen>
-    <dimen name="content_margin">12dp</dimen>
+    <dimen name="margin2">2dp</dimen>
+    <dimen name="margin4">4dp</dimen>
+    <dimen name="margin8">8dp</dimen>
+    <dimen name="margin10">10dp</dimen>
+    <dimen name="margin11">11dp</dimen>
+    <dimen name="margin12">12dp</dimen>
+    <dimen name="margin15">15dp</dimen>
+    <dimen name="margin17">17dp</dimen>
 
     <!-- Font sizes -->
-    <dimen name="font_size_big">16sp</dimen>
+    <dimen name="font_size14">14sp</dimen>
+    <dimen name="font_size16">16sp</dimen>
+    <dimen name="font_size22">22sp</dimen>
+    <dimen name="line_spacing">6sp</dimen>
 </resources>

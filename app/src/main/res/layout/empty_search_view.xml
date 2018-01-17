@@ -22,7 +22,7 @@
         android:layout_marginRight="@dimen/text_view_margin"
         android:layout_marginLeft="@dimen/text_view_margin"
         android:textAlignment="center"
-        android:textSize="@dimen/font_size_big"
+        android:textSize="@dimen/font_size16"
         android:textColor="@color/colorTextInfo"
         android:text="@string/empty_search" />
 </RelativeLayout>

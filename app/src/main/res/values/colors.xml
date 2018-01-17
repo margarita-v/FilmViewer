@@ -8,6 +8,7 @@
 
     <!-- Color for texts -->
     <color name="colorHint">#61000000</color>
-    <color name="colorQuery">#de000000</color>
+    <color name="colorTitle">#de000000</color>
+    <color name="colorDescription">#8b000000</color>
     <color name="colorTextInfo">#b4b4b4</color>
 </resources>
