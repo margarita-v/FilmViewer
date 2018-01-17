@@ -92,6 +92,8 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/icon"
                     android:layout_toEndOf="@id/icon"
+                    android:layout_toLeftOf="@id/space"
+                    android:layout_toStartOf="@id/space"
                     android:layout_marginTop="@dimen/margin4"
                     android:layout_marginBottom="@dimen/margin4"
                     android:layout_marginLeft="@dimen/margin2"
@@ -102,6 +104,13 @@
                     android:textStyle="normal"
                     android:textColor="@color/colorDescription"
                     tools:text="1 января 2017" />
+
+                <android.support.v4.widget.Space
+                    android:id="@+id/space"
+                    android:layout_width="@dimen/margin8"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/iconLike"
+                    android:layout_toStartOf="@id/iconLike" />
 
                 <ImageView
                     android:id="@+id/iconLike"
