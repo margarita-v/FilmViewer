@@ -7,4 +7,5 @@
     <string name="empty_search">По запросу \"%1$s\" ничего не найдено</string>
     <string name="photo">Photo</string>
     <string name="calendar_icon">Calendar icon</string>
+    <string name="like">Like</string>
 </resources>

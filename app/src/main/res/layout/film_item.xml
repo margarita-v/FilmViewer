@@ -14,69 +14,103 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            
+
+            <!-- Photo -->
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/photo_width"
                 android:layout_height="@dimen/photo_height"
-                android:contentDescription="@string/photo"
-                android:layout_marginRight="@dimen/photo_margin_right"
-                android:layout_marginEnd="@dimen/photo_margin_right" />
+                android:contentDescription="@string/photo" />
 
+            <!-- Content -->
             <RelativeLayout
+                android:id="@+id/layoutContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/imageView"
                 android:layout_toEndOf="@id/imageView"
+                android:layout_marginLeft="@dimen/photo_margin_right"
+                android:layout_marginStart="@dimen/photo_margin_right"
                 android:layout_marginTop="@dimen/content_margin"
-                android:layout_marginBottom="@dimen/content_margin"
-                android:layout_marginRight="@dimen/content_margin"
-                android:layout_marginEnd="@dimen/content_margin">
+                android:layout_marginRight="17dp"
+                android:layout_marginEnd="17dp">
 
                 <TextView
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/common_margin"
+                    android:maxLines="2"
                     android:textSize="22sp"
                     android:fontFamily="sans-serif-medium"
                     android:textStyle="normal"
                     android:textColor="#de000000"
                     android:lineSpacingExtra="6sp"
-                    tools:text="Аритмия 18+" />
+                    tools:text="Бегущий по лезвию 2049" />
 
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvName"
+                    android:maxLines="2"
                     android:textSize="14sp"
                     android:fontFamily="sans-serif"
                     android:textStyle="normal"
                     android:textColor="#8b000000"
                     android:lineSpacingExtra="6sp"
-                    tools:text="Олег - талантливый врач, работает на «скорой», которая мчится от пациента" />
+                    tools:text="Отставной детектив Рик Декард вновь восстановлен в полиции Лос-Анджелеса для поиска возглавляемой Роем Батти группы киборгов, совершившей побег из космической колонии на Землю." />
+            </RelativeLayout>
+
+            <!-- Footer -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_below="@id/layoutContent"
+                android:layout_toRightOf="@id/imageView"
+                android:layout_toEndOf="@id/imageView"
+                android:layout_marginLeft="11dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginRight="@dimen/content_margin"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:paddingBottom="@dimen/content_margin"
+                android:layout_alignParentBottom="true">
 
                 <ImageView
                     android:id="@+id/icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     app:srcCompat="@drawable/ic_calendar"
-                    android:contentDescription="@string/calendar_icon"
-                    android:layout_alignParentBottom="true" />
+                    android:contentDescription="@string/calendar_icon" />
 
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@id/icon"
                     android:layout_toEndOf="@id/icon"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_alignParentBottom="true"
                     android:textSize="14sp"
                     android:fontFamily="sans-serif"
                     android:textStyle="normal"
                     android:textColor="#8b000000"
                     tools:text="1 января 2017" />
+
+                <ImageView
+                    android:id="@+id/iconLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/icon"
+                    app:srcCompat="@drawable/ic_heart"
+                    android:contentDescription="@string/like"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true" />
             </RelativeLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
