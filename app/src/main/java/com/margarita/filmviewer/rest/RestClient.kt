@@ -16,6 +16,9 @@ class RestClient {
         private const val API_KEY_NAME = "api_key"
         private const val API_KEY_VALUE = "6ccd72a2a8fc239b13f209408fc31c33"
 
+        private const val LANGUAGE_NAME = "language"
+        private const val LANGUAGE_VALUE = "ru-RU"
+
         private const val IMAGE_SIZE = "w342/"
         const val BASE_URL = "https://developers.themoviedb.org/3/"
         const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/" + IMAGE_SIZE
@@ -56,6 +59,7 @@ class RestClient {
             // Add API key as a query parameter
             val url = originalRequest.url().newBuilder()
                     .addQueryParameter(API_KEY_NAME, API_KEY_VALUE)
+                    .addQueryParameter(LANGUAGE_NAME, LANGUAGE_VALUE)
                     .build()
 
             // Build request with a new url
