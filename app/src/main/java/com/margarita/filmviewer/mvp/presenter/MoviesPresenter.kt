@@ -6,6 +6,7 @@ import com.margarita.filmviewer.models.FullResponse
 import com.margarita.filmviewer.models.MovieResponse
 import com.margarita.filmviewer.mvp.view.MoviesView
 import com.margarita.filmviewer.rest.FilmsApi
+import com.margarita.filmviewer.rest.RestClient
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -46,8 +47,13 @@ class MoviesPresenter(private val moviesView: MoviesView) {
                     .doFinally({ onLoadingFinish(loadingState) })
                     .subscribe({
                         val result = it.requireNoNulls()
-                        if (result.isNotEmpty())
+                        if (result.isNotEmpty()) {
+                            // Configure URLs for images
+                            result.forEach {
+                                it.posterPath = RestClient.BASE_IMAGE_URL + it.posterPath
+                            }
                             onLoadingSuccess(loadingState, result)
+                        }
                         else
                             onLoadingFailed(loadingState)
                     }, {

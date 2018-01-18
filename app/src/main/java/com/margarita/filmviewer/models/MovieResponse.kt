@@ -7,7 +7,7 @@ data class MovieResponse(
 		@Expose val id: Int? = null,
 		@Expose val title: String? = null,
 		@Expose val overview: String? = null,
-		@Expose @SerializedName(POSTER_PATH) val posterPath: String? = null,
+		@Expose @SerializedName(POSTER_PATH) var posterPath: String? = null,
 		@Expose @SerializedName(RELEASE_DATE) val releaseDate: String? = null,
 		val originalLanguage: String? = null,
 		val originalTitle: String? = null,

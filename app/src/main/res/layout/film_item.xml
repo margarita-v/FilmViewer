@@ -109,11 +109,11 @@
                     android:id="@+id/space"
                     android:layout_width="@dimen/margin8"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/iconLike"
-                    android:layout_toStartOf="@id/iconLike" />
+                    android:layout_toLeftOf="@id/imgBtnLike"
+                    android:layout_toStartOf="@id/imgBtnLike" />
 
-                <ImageView
-                    android:id="@+id/iconLike"
+                <ImageButton
+                    android:id="@+id/imgBtnLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@id/icon"
