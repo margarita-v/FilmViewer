@@ -12,8 +12,5 @@ class RestModule {
     private val restClient: RestClient = RestClient()
 
     @Provides @Singleton
-    internal fun provideRestClient() = restClient
-
-    @Provides @Singleton
-    fun provideFilmsApi() = restClient.createService(FilmsApi::class.java)
+    internal fun provideFilmsApi() = restClient.createService(FilmsApi::class.java)
 }

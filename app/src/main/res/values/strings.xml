@@ -5,6 +5,7 @@
     <string name="loading_error">Loading error</string>
     <string name="loading_message">Нам не удалось обработать ваш запрос. Попробуйте еще раз</string>
     <string name="empty_search">По запросу \"%1$s\" ничего не найдено</string>
+    <string name="refresh_error">Проверьте ваше соеденение с интернетом и попробуйте еще раз</string>
     <string name="photo">Photo</string>
     <string name="calendar_icon">Calendar icon</string>
     <string name="like">Like</string>
