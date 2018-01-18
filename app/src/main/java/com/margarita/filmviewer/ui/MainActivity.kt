@@ -65,38 +65,38 @@ class MainActivity : AppCompatActivity(), MoviesView {
     }
 
     override fun hideSearchProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showSearchError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showLoadingError() {
+        //TODO SnackBar
         Toast.makeText(this, "Hell!", Toast.LENGTH_SHORT).show()
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun setSearchResult(movies: List<Movie>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun setMovies(movies: List<Movie>): Unit = adapter.setMovies(movies)
 
     override fun showLoadingNextContent() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun hideLoadingNextContent() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun hideRefreshing() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showRefreshingError(messageRes: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun addMovies(movies: List<Movie>): Unit = adapter.addMovies(movies)

@@ -34,10 +34,10 @@ class RestClient {
                 .create()
 
         retrofit = Retrofit.Builder()
-                .client(httpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(BASE_URL)
+                .client(httpClient)
                 .build()
     }
 

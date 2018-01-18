@@ -39,6 +39,8 @@
 
         <include layout="@layout/progress_bar" />
 
+        <include layout="@layout/fragment_list" />
+
         <include layout="@layout/empty_search_view" android:visibility="gone" />
 
     </FrameLayout>
@@ -52,7 +54,7 @@
         android:adjustViewBounds="true"
         android:cropToPadding="true"
         android:scaleType="center"
-        android:visibility="gone"
-        app:srcCompat="@drawable/ic_fab" />
+        android:visibility="visible"
+        app:srcCompat="@drawable/fab" />
 
 </android.support.design.widget.CoordinatorLayout>

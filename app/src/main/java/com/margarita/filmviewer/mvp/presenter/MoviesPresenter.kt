@@ -76,7 +76,7 @@ class MoviesPresenter(private val moviesView: MoviesView) {
             if (loadingState != LoadingState.Searching)
                 filmsApi.discoverMovies(pageNumber)
             else
-                filmsApi.searchMoview(pageNumber, query)
+                filmsApi.searchMovie(pageNumber, query)
     //endregion
 
     /**

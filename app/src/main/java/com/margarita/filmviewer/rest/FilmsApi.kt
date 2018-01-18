@@ -33,6 +33,6 @@ interface FilmsApi {
      * @param query Query for search
      */
     @GET(SEARCH_MOVIE)
-    fun searchMoview(@Query(QUERY_PAGE) page: Int,
-                     @Query(QUERY) query: String): Observable<FullResponse>
+    fun searchMovie(@Query(QUERY_PAGE) page: Int,
+                    @Query(QUERY) query: String): Observable<FullResponse>
 }
