@@ -26,6 +26,24 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     override fun getItemCount() = movies.size
 
     /**
+     * Function for setting a new list of movies to the adapter
+     * @param movies List of movies which will be stored in the adapter
+     */
+    fun setMovies(movies: List<Movie>) {
+        this.movies.clear()
+        addMovies(movies)
+    }
+
+    /**
+     * Function for addition a new list of movies to the adapter
+     * @param movies List of movies which will be added to the adapter
+     */
+    fun addMovies(movies: List<Movie>) {
+        this.movies.addAll(movies)
+        notifyDataSetChanged()
+    }
+
+    /**
      * View holder for movies
      */
     inner class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
