@@ -3,7 +3,7 @@ package com.margarita.filmviewer.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(
+data class Movie(
 		@Expose val id: Int? = null,
 		@Expose val title: String? = null,
 		@Expose val overview: String? = null,

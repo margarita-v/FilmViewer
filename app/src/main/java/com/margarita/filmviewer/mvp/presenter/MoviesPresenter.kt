@@ -3,7 +3,7 @@ package com.margarita.filmviewer.mvp.presenter
 import com.margarita.filmviewer.MainApplication
 import com.margarita.filmviewer.R
 import com.margarita.filmviewer.models.FullResponse
-import com.margarita.filmviewer.models.MovieResponse
+import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.view.MoviesView
 import com.margarita.filmviewer.rest.FilmsApi
 import com.margarita.filmviewer.rest.RestClient
@@ -147,7 +147,7 @@ class MoviesPresenter(private val moviesView: MoviesView) {
      * @param loadingState Current loading state
      * @param movies List of movies which was loaded
      */
-    private fun onLoadingSuccess(loadingState: LoadingState, movies: List<MovieResponse>) {
+    private fun onLoadingSuccess(loadingState: LoadingState, movies: List<Movie>) {
         when (loadingState) {
             LoadingState.LoadingFirst, LoadingState.Refreshing -> moviesView.setMovies(movies)
             LoadingState.LoadingNext -> moviesView.addMovies(movies)

@@ -1,6 +1,6 @@
 package com.margarita.filmviewer.mvp.view
 
-import com.margarita.filmviewer.models.MovieResponse
+import com.margarita.filmviewer.models.Movie
 
 /**
  * Interface for a view which implements a search of movies
@@ -26,5 +26,5 @@ interface SearchView {
      * Function for setting a search result to the search adapter
      * @param movies Result of search
      */
-    fun setSearchResult(movies: List<MovieResponse>)
+    fun setSearchResult(movies: List<Movie>)
 }

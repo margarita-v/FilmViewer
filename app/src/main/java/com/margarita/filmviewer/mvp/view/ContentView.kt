@@ -1,7 +1,7 @@
 package com.margarita.filmviewer.mvp.view
 
 import android.support.annotation.StringRes
-import com.margarita.filmviewer.models.MovieResponse
+import com.margarita.filmviewer.models.Movie
 
 /**
  * Interface for a base content view
@@ -27,7 +27,7 @@ interface ContentView {
      * Function for setting a new list of movies
      * @param movies List of movies which will be set to the view's adapter
      */
-    fun setMovies(movies: List<MovieResponse>)
+    fun setMovies(movies: List<Movie>)
 
     /**
      * Show animation for a loading of the next content page
@@ -54,5 +54,5 @@ interface ContentView {
      * Add new movies to list
      * @param movies New movies which will be added to list
      */
-    fun addMovies(movies: List<MovieResponse>)
+    fun addMovies(movies: List<Movie>)
 }
