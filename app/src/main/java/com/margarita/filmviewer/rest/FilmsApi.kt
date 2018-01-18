@@ -8,8 +8,8 @@ import retrofit2.http.Query
 interface FilmsApi {
 
     companion object {
-        private const val DISCOVER_MOVIES = "discover/movies/"
-        private const val SEARCH_MOVIE = "search/movie/"
+        private const val DISCOVER_MOVIE = "discover/movie"
+        private const val SEARCH_MOVIE = "search/movie"
 
         private const val SORT_NAME = "sort_by"
         private const val SORT_VALUE = "popularity.desc"
@@ -23,9 +23,9 @@ interface FilmsApi {
      * @param sort Sort condition
      * @param page Page number
      */
-    @GET(DISCOVER_MOVIES)
-    fun discoverMovies(@Query(QUERY_PAGE) page: Int,
-                       @Query(SORT_NAME) sort: String = SORT_VALUE): Observable<FullResponse>
+    @GET(DISCOVER_MOVIE)
+    fun discoverMovie(@Query(QUERY_PAGE) page: Int,
+                      @Query(SORT_NAME) sort: String = SORT_VALUE): Observable<FullResponse>
 
     /**
      * Function for searching a movies by given search query

@@ -74,7 +74,7 @@ class MoviesPresenter(private val moviesView: MoviesView) {
                                     query: String): Observable<FullResponse> =
 
             if (loadingState != LoadingState.Searching)
-                filmsApi.discoverMovies(pageNumber)
+                filmsApi.discoverMovie(pageNumber)
             else
                 filmsApi.searchMovie(pageNumber, query)
     //endregion

@@ -20,7 +20,7 @@ class RestClient {
         private const val LANGUAGE_VALUE = "ru-RU"
 
         private const val IMAGE_SIZE = "w342/"
-        const val BASE_URL = "https://developers.themoviedb.org/3/"
+        const val BASE_URL = "https://api.themoviedb.org/3/"
         const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/" + IMAGE_SIZE
     }
 
