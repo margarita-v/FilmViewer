@@ -24,8 +24,8 @@ interface FilmsApi {
      * @param page Page number
      */
     @GET(DISCOVER_MOVIES)
-    fun discoverMovies(@Query(SORT_NAME) sort: String = SORT_VALUE,
-                       @Query(QUERY_PAGE) page: Int): Observable<FullResponse>
+    fun discoverMovies(@Query(QUERY_PAGE) page: Int,
+                       @Query(SORT_NAME) sort: String = SORT_VALUE): Observable<FullResponse>
 
     /**
      * Function for searching a movies by given search query

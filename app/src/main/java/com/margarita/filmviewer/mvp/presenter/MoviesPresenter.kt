@@ -2,9 +2,13 @@ package com.margarita.filmviewer.mvp.presenter
 
 import com.margarita.filmviewer.MainApplication
 import com.margarita.filmviewer.R
+import com.margarita.filmviewer.models.FullResponse
 import com.margarita.filmviewer.models.MovieResponse
 import com.margarita.filmviewer.mvp.view.MoviesView
 import com.margarita.filmviewer.rest.FilmsApi
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MoviesPresenter(private val moviesView: MoviesView) {
@@ -21,6 +25,7 @@ class MoviesPresenter(private val moviesView: MoviesView) {
         MainApplication.applicationComponent.inject(this)
     }
 
+    //region Common functions for movies loading
     /**
      * Common function which configures all kinds of data loading
      * @param loadingState Current loading state
@@ -32,17 +37,41 @@ class MoviesPresenter(private val moviesView: MoviesView) {
                            query: String = "It") {
         if (!isLoading) {
             isLoading = true
+            getMoviesObservable(loadingState, pageNumber, query)
+                    .flatMap { Observable.fromIterable(it.results) }
+                    .toList()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe({ showProgress(loadingState) })
+                    .doFinally({ onLoadingFinish(loadingState) })
+                    .subscribe({
+                        val result = it.requireNoNulls()
+                        if (result.isNotEmpty())
+                            onLoadingSuccess(loadingState, result)
+                        else
+                            onLoadingFailed(loadingState)
+                    }, {
+                        it.printStackTrace()
+                        onLoadingFailed(loadingState)
+                    })
         }
     }
 
-    /*
-    private fun discoverMovies(pageNumber: Int): Observable<MovieResponse> {
+    /**
+     * Function for getting movies for different loading states
+     * @param loadingState Current loading state
+     * @param pageNumber Current page number
+     * @param query Search query
+     */
+    private fun getMoviesObservable(loadingState: LoadingState,
+                                    pageNumber: Int,
+                                    query: String): Observable<FullResponse> =
 
-    }
-
-    private fun searchMovies(pageNumber: Int, query: String): Observable<MovieResponse> {
-
-    }*/
+            if (loadingState != LoadingState.Searching)
+                filmsApi.discoverMovies(pageNumber)
+            else
+                filmsApi.searchMoview(pageNumber, query)
+    //endregion
 
     /**
      * Function for showing a progress of a concrete loading state
@@ -74,33 +103,27 @@ class MoviesPresenter(private val moviesView: MoviesView) {
     /**
      * Initial loading of the content
      */
-    fun loadStart() {
-
-    }
+    fun loadStart() = loadMovies(LoadingState.LoadingFirst)
 
     /**
      * Loading of the next content page
      * @param pageNumber Number of page which will be loaded
      */
-    fun loadNext(pageNumber: Int) {
-
-    }
+    fun loadNext(pageNumber: Int) = loadMovies(LoadingState.LoadingNext, pageNumber)
 
     /**
      * Refresh content
      */
-    fun loadRefresh() {
-
-    }
+    fun loadRefresh() = loadMovies(LoadingState.Refreshing)
 
     /**
      * Search movies
      * @param pageNumber Number of page (search result could be large)
      * @param query Search query
      */
-    fun loadForSearch(pageNumber: Int, query: String) {
+    fun loadForSearch(pageNumber: Int, query: String)
+            = loadMovies(LoadingState.Searching, pageNumber, query)
 
-    }
     //endregion
 
     //region Common loading actions
