@@ -66,11 +66,7 @@ class MainActivity : AppCompatActivity(), MoviesView {
         editText.setTextColor(getColorResource(R.color.colorTitle))
     }
 
-    //region MoviesView implementation
-    override fun showSearchProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+    //region Loading content
     override fun showLoadingContent() {
         progressBar.visibility = View.VISIBLE
     }
@@ -79,25 +75,15 @@ class MainActivity : AppCompatActivity(), MoviesView {
         progressBar.visibility = View.GONE
     }
 
-    override fun hideSearchProgress() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showSearchError() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun showLoadingError() {
-        //TODO SnackBar
+        //TODO
         Toast.makeText(this, "Hell!", Toast.LENGTH_SHORT).show()
     }
 
-    override fun setSearchResult(movies: List<Movie>) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun setMovies(movies: List<Movie>): Unit = adapter.setMovies(movies)
+    //endregion
 
+    //region Loading next or refreshing
     override fun showLoadingNextContent() {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -106,13 +92,31 @@ class MainActivity : AppCompatActivity(), MoviesView {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun addMovies(movies: List<Movie>): Unit = adapter.addMovies(movies)
+
     override fun hideRefreshing() {
         swipeContainer.isRefreshing = false
     }
 
     override fun showRefreshingError(messageRes: Int): Unit
             = container.showSnackBar(messageRes)
+    //endregion
 
-    override fun addMovies(movies: List<Movie>): Unit = adapter.addMovies(movies)
+    //region Search
+    override fun showSearchProgress() {
+        progressSearch.visibility = View.VISIBLE
+    }
+
+    override fun hideSearchProgress() {
+        progressSearch.visibility = View.VISIBLE
+    }
+
+    override fun showSearchError() {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setSearchResult(movies: List<Movie>) {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
     //endregion
  }
