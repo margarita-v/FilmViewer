@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.margarita.filmviewer.R
 import com.margarita.filmviewer.common.MovieAdapter
 import com.margarita.filmviewer.common.getColorResource
+import com.margarita.filmviewer.common.showSnackBar
 import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
 import com.margarita.filmviewer.mvp.view.MoviesView
@@ -36,6 +37,9 @@ class MainActivity : AppCompatActivity(), MoviesView {
 
         rvList.layoutManager = LinearLayoutManager(this)
         rvList.adapter = adapter
+
+        swipeContainer.setColorSchemeResources(R.color.colorAccent)
+        swipeContainer.setOnRefreshListener { presenter.loadRefresh() }
 
         setupSearchView()
         presenter.loadStart()
@@ -92,12 +96,11 @@ class MainActivity : AppCompatActivity(), MoviesView {
     }
 
     override fun hideRefreshing() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        swipeContainer.isRefreshing = false
     }
 
-    override fun showRefreshingError(messageRes: Int) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun showRefreshingError(messageRes: Int): Unit
+            = swipeContainer.showSnackBar(messageRes)
 
     override fun addMovies(movies: List<Movie>): Unit = adapter.addMovies(movies)
     //endregion

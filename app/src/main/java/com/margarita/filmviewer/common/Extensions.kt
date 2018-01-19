@@ -3,6 +3,8 @@ package com.margarita.filmviewer.common
 import android.content.Context
 import android.support.annotation.ColorRes
 import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
+import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +27,22 @@ fun Context.getColorResource(@ColorRes colorResId: Int): Int
  */
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View
         = LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+
+/**
+ * Function for showing SnackBar
+ * @param messageRes String resource ID for a message text
+ * @param duration Duration of the SnackBar showing
+ */
+fun View.showSnackBar(@StringRes messageRes: Int, duration: Int = Snackbar.LENGTH_LONG): Unit
+        = Snackbar.make(this, messageRes, duration).show()
+
+/**
+ * Function for showing SnackBar
+ * @param message A text of message
+ * @param duration Duration of the SnackBar showing
+ */
+fun View.showSnackBar(message: String, duration: Int = Snackbar.LENGTH_LONG): Unit
+        = Snackbar.make(this, message, duration).show()
 
 /**
  * Function for loading image to ImageView using image Uri
