@@ -3,9 +3,10 @@
     <dimen name="fab_size">56dp</dimen>
     <dimen name="card_view_radius">25dp</dimen>
     <dimen name="progress_bar_size">28dp</dimen>
-    <dimen name="footer_height">48dp</dimen>
+    <dimen name="footer_height">36dp</dimen>
     <dimen name="photo_width">120dp</dimen>
     <dimen name="photo_height">183dp</dimen>
+    <dimen name="photo_margin_left">-2dp</dimen>
 
     <!-- Margin values -->
     <dimen name="fab_margin">16dp</dimen>==
