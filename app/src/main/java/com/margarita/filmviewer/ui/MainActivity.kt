@@ -1,6 +1,7 @@
 package com.margarita.filmviewer.ui
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -24,7 +25,17 @@ class MainActivity : AppCompatActivity(), MoviesView {
     /**
      * Adapter for RecyclerView
      */
-    private var adapter = MovieAdapter()
+    private val adapter: MovieAdapter by lazy {
+        MovieAdapter(object: MovieAdapter.OnMovieClickListener {
+            override fun onMovieClick(movie: Movie) {
+                container.showSnackBar(movie.title!!, Snackbar.LENGTH_SHORT)
+            }
+
+            override fun like(movie: Movie) {
+                //TODO
+            }
+        })
+    }
 
     /**
      * Presenter of movies
@@ -100,7 +111,7 @@ class MainActivity : AppCompatActivity(), MoviesView {
     }
 
     override fun showRefreshingError(messageRes: Int): Unit
-            = swipeContainer.showSnackBar(messageRes)
+            = container.showSnackBar(messageRes)
 
     override fun addMovies(movies: List<Movie>): Unit = adapter.addMovies(movies)
     //endregion

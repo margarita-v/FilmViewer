@@ -10,7 +10,8 @@ import kotlinx.android.synthetic.main.film_item.view.*
 /**
  * Adapter for list of movies
  */
-class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(private val movieClickListener: OnMovieClickListener)
+    : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     /**
      * List of movies
@@ -21,7 +22,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
             = MovieViewHolder(parent.inflate(R.layout.film_item))
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int): Unit
-            = holder.bind(movies[position])
+            = holder.bind(movies[position], movieClickListener)
 
     override fun getItemCount() = movies.size
 
@@ -51,12 +52,33 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         /**
          * Function for binding a movie item and showing its info
          * @param movie Movie which info will be shown
+         * @param onMovieClickListener Listener of movie click events
          */
-        fun bind(movie: Movie): Unit = with(itemView) {
+        fun bind(movie: Movie,
+                 onMovieClickListener: OnMovieClickListener): Unit = with(itemView) {
             tvName.text = movie.title
             tvDescription.text = movie.overview
             tvDate.text = movie.releaseDate
             imageView.loadImage(itemView.context, movie.posterPath!!)
+            setOnClickListener{ onMovieClickListener.onMovieClick(movie) }
         }
+    }
+
+    /**
+     * Interface for a note click event handling
+     */
+    interface OnMovieClickListener {
+
+        /**
+         * Function for performing a movie click event
+         * @param movie Movie which was clicked
+         */
+        fun onMovieClick(movie: Movie)
+
+        /**
+         * Function for adding a movie to favorites
+         * @param movie Movie which will be added to favorites or removed from favorites
+         */
+        fun like(movie: Movie)
     }
 }
