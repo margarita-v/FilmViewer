@@ -48,9 +48,10 @@ class MoviesPresenter(private val moviesView: MoviesView) {
                     .subscribe({
                         val result = it.requireNoNulls()
                         if (result.isNotEmpty()) {
-                            // Configure URLs for images
+                            // Configure URLs for images and parse dates
                             result.forEach {
                                 it.posterPath = RestClient.BASE_IMAGE_URL + it.posterPath
+                                it.parseDate()
                             }
                             onLoadingSuccess(loadingState, result)
                         }
