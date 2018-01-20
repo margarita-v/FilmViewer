@@ -4,8 +4,7 @@
     android:id="@+id/layoutEmpty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:paddingBottom="@dimen/fab_size">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/imageView"
@@ -16,6 +15,7 @@
         android:contentDescription="@string/loading_error" />
 
     <TextView
+        android:id="@+id/tvEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="@dimen/text_view_width"

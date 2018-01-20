@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.widget.EditText
 
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,6 +14,7 @@ import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
 import com.margarita.filmviewer.mvp.view.MoviesView
+import kotlinx.android.synthetic.main.empty_search_view.*
 import kotlinx.android.synthetic.main.error_view.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.progress_bar.*
@@ -61,6 +63,16 @@ class MainActivity : AppCompatActivity(), MoviesView {
         val editText = searchView.findViewById(R.id.search_src_text) as EditText
         editText.setHintTextColor(getColorResource(R.color.colorHint))
         editText.setTextColor(getColorResource(R.color.colorTitle))
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                presenter.loadForSearch(1, query)
+                return true
+            }
+        })
     }
 
     //region Loading content
@@ -99,16 +111,22 @@ class MainActivity : AppCompatActivity(), MoviesView {
     //endregion
 
     //region Search
-    override fun showSearchProgress(): Unit = progressSearch.show()
+    override fun showSearchProgress() {
+        progressSearch.show()
+        layoutEmpty.hide()
+    }
 
     override fun hideSearchProgress(): Unit = progressSearch.becomeInvisible()
 
     override fun showSearchError() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        layoutEmpty.show()
+        hideKeyboard()
+        tvEmpty.text = getString(R.string.empty_search, searchView.query)
     }
 
     override fun setSearchResult(movies: List<Movie>) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        hideKeyboard()
+        adapter.setMovies(movies)
     }
     //endregion
  }
