@@ -5,23 +5,44 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:srcCompat="@drawable/ic_alert_triangle"
-        android:contentDescription="@string/loading_error" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/fab">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/text_view_margin_top"
-        android:layout_below="@id/imageView"
-        android:layout_marginRight="@dimen/text_view_margin"
-        android:layout_marginLeft="@dimen/text_view_margin"
-        android:textAlignment="center"
-        android:textSize="@dimen/font_size16"
-        android:textColor="@color/colorTextInfo"
-        android:text="@string/loading_message" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_alert_triangle"
+            android:contentDescription="@string/loading_error" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_view_margin_top"
+            android:layout_below="@id/imageView"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size16"
+            android:textColor="@color/colorTextInfo"
+            android:text="@string/loading_message" />
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:srcCompat="@drawable/fab" />
+
 </RelativeLayout>
