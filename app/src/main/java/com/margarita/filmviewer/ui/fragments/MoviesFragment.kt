@@ -18,7 +18,6 @@ import com.margarita.filmviewer.mvp.view.MoviesView
 import com.margarita.filmviewer.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.android.synthetic.main.progress_bar.*
 
 /**
  * Fragment for showing a list of movies
@@ -41,7 +40,7 @@ class MoviesFragment : Fragment(), MoviesView {
     private val adapter: MovieAdapter by lazy {
         MovieAdapter(object: MovieAdapter.OnMovieClickListener {
             override fun onMovieClick(movie: Movie) {
-                container.showSnackBar(movie.title!!, Snackbar.LENGTH_SHORT)
+                swipeContainer.showSnackBar(movie.title!!, Snackbar.LENGTH_SHORT)
             }
 
             override fun like(movie: Movie) {
@@ -50,11 +49,22 @@ class MoviesFragment : Fragment(), MoviesView {
         })
     }
 
-
     /**
      * Presenter of movies
      */
     private val presenter by lazy { MoviesPresenter(this) }
+
+    companion object {
+        /**
+         * Message for a class cast exception
+         */
+        private const val CLASS_CAST_MESSAGE = " must implement OnContentErrorListener"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -78,7 +88,7 @@ class MoviesFragment : Fragment(), MoviesView {
             contentErrorListener = activity as OnContentErrorListener
             mainActivity = activity as MainActivity
         } catch (e: ClassCastException) {
-            throw ClassCastException(activity.toString() + " must implement OnContentErrorListener")
+            throw ClassCastException(activity.toString() + CLASS_CAST_MESSAGE)
         }
     }
 

@@ -18,15 +18,28 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnContentErrorListener 
     /**
      * All fragments
      */
-    private val moviesFragment by lazy { MoviesFragment() }
+    private var moviesFragment: MoviesFragment? = null
     private val errorFragment by lazy { ErrorFragment() }
     private val emptySearchFragment by lazy { EmptySearchFragment() }
+
+    companion object {
+        private const val MOVIE_FRAGMENT_TAG = "Movies"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupSearchView()
-        setFragment(moviesFragment)
+        moviesFragment = supportFragmentManager
+                .findFragmentByTag(MOVIE_FRAGMENT_TAG) as MoviesFragment?
+        if (moviesFragment == null) {
+            moviesFragment = MoviesFragment()
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.container, moviesFragment, MOVIE_FRAGMENT_TAG)
+                    .commit()
+        } else {
+            setFragment(moviesFragment!!)
+        }
     }
 
     /**
