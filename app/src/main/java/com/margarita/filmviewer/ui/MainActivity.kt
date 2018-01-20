@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
 
 import com.margarita.filmviewer.R
-import com.margarita.filmviewer.common.MovieAdapter
-import com.margarita.filmviewer.common.getColorResource
-import com.margarita.filmviewer.common.showSnackBar
+import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
 import com.margarita.filmviewer.mvp.view.MoviesView
@@ -67,13 +64,9 @@ class MainActivity : AppCompatActivity(), MoviesView {
     }
 
     //region Loading content
-    override fun showLoadingContent() {
-        progressBar.visibility = View.VISIBLE
-    }
+    override fun showLoadingContent(): Unit = progressBar.show()
 
-    override fun hideLoadingContent() {
-        progressBar.visibility = View.GONE
-    }
+    override fun hideLoadingContent(): Unit = progressBar.hide()
 
     override fun showLoadingError() {
         //TODO
@@ -103,13 +96,9 @@ class MainActivity : AppCompatActivity(), MoviesView {
     //endregion
 
     //region Search
-    override fun showSearchProgress() {
-        progressSearch.visibility = View.VISIBLE
-    }
+    override fun showSearchProgress(): Unit = progressSearch.show()
 
-    override fun hideSearchProgress() {
-        progressSearch.visibility = View.VISIBLE
-    }
+    override fun hideSearchProgress(): Unit = progressSearch.becomeInvisible()
 
     override fun showSearchError() {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
