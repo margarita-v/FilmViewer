@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.EditText
-import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,6 +13,7 @@ import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
 import com.margarita.filmviewer.mvp.view.MoviesView
+import kotlinx.android.synthetic.main.error_view.*
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.progress_bar.*
 
@@ -64,13 +64,16 @@ class MainActivity : AppCompatActivity(), MoviesView {
     }
 
     //region Loading content
-    override fun showLoadingContent(): Unit = progressBar.show()
+    override fun showLoadingContent() {
+        progressBar.show()
+        layoutError.hide()
+    }
 
     override fun hideLoadingContent(): Unit = progressBar.hide()
 
     override fun showLoadingError() {
-        //TODO
-        Toast.makeText(this, "Hell!", Toast.LENGTH_SHORT).show()
+        layoutError.show()
+        swipeContainer.hide()
     }
 
     override fun setMovies(movies: List<Movie>): Unit = adapter.setMovies(movies)

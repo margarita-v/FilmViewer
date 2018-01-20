@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import com.squareup.picasso.Picasso
 
 /**
@@ -64,16 +63,16 @@ fun View.showSnackBar(message: String, duration: Int = Snackbar.LENGTH_LONG): Un
 fun ImageView.loadImage(context: Context, url: String): Unit
         = Picasso.with(context).load(url).into(this)
 
-//region Function for setting visibility of progress bar
-fun ProgressBar.show() {
+//region Function for setting visibility of views
+fun View.show() {
     visibility = View.VISIBLE
 }
 
-fun ProgressBar.hide() {
+fun View.hide() {
     visibility = View.GONE
 }
 
-fun ProgressBar.becomeInvisible() {
+fun View.becomeInvisible() {
     visibility = View.INVISIBLE
 }
 //endregion
