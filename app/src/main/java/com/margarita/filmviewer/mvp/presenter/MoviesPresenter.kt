@@ -1,7 +1,9 @@
 package com.margarita.filmviewer.mvp.presenter
 
+import android.content.Context
 import com.margarita.filmviewer.MainApplication
 import com.margarita.filmviewer.R
+import com.margarita.filmviewer.common.isOnline
 import com.margarita.filmviewer.models.FullResponse
 import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.view.MoviesView
@@ -16,6 +18,9 @@ class MoviesPresenter(private val moviesView: MoviesView) {
 
     @Inject
     internal lateinit var filmsApi: FilmsApi
+
+    @Inject
+    internal lateinit var context: Context
 
     /**
      * Flag which shows if the loading is performing now
@@ -72,12 +77,16 @@ class MoviesPresenter(private val moviesView: MoviesView) {
      */
     private fun getMoviesObservable(loadingState: LoadingState,
                                     pageNumber: Int,
-                                    query: String): Observable<FullResponse> =
+                                    query: String): Observable<FullResponse> {
 
-            if (loadingState != LoadingState.Searching)
+        if (context.isOnline()) {
+            return if (loadingState != LoadingState.Searching)
                 filmsApi.discoverMovie(pageNumber)
             else
                 filmsApi.searchMovie(pageNumber, query)
+        }
+        return Observable.empty()
+    }
     //endregion
 
     /**

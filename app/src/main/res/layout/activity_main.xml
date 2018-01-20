@@ -55,16 +55,4 @@
 
     </FrameLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom|center"
-        android:adjustViewBounds="true"
-        android:cropToPadding="true"
-        android:scaleType="center"
-        android:visibility="gone"
-        app:srcCompat="@drawable/fab" />
-
 </android.support.design.widget.CoordinatorLayout>

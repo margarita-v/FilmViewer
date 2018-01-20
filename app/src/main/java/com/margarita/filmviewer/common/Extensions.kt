@@ -1,6 +1,7 @@
 package com.margarita.filmviewer.common
 
 import android.content.Context
+import android.net.ConnectivityManager
 import android.support.annotation.ColorRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
@@ -18,6 +19,16 @@ import com.squareup.picasso.Picasso
  */
 fun Context.getColorResource(@ColorRes colorResId: Int): Int
         = ContextCompat.getColor(this, colorResId)
+
+/**
+ * Function for checking if device is connected to the Internet
+ * @return True if the Internet connection is available
+ */
+fun Context.isOnline(): Boolean {
+    val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = manager.activeNetworkInfo
+    return networkInfo != null && networkInfo.isConnected
+}
 
 /**
  * Function for simple inflating layout file to view group
