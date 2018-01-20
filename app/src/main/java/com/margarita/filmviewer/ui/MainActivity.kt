@@ -17,7 +17,6 @@ import com.margarita.filmviewer.mvp.view.MoviesView
 import kotlinx.android.synthetic.main.empty_search_view.*
 import kotlinx.android.synthetic.main.error_view.*
 import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.android.synthetic.main.progress_bar.*
 
 class MainActivity : AppCompatActivity(), MoviesView {
 
@@ -77,16 +76,13 @@ class MainActivity : AppCompatActivity(), MoviesView {
 
     //region Loading content
     override fun showLoadingContent() {
-        progressBar.show()
-        layoutError.hide()
+        layoutProgress.show()
+        containerViews.hide()
     }
 
-    override fun hideLoadingContent(): Unit = progressBar.hide()
+    override fun hideLoadingContent(): Unit = layoutProgress.hide()
 
-    override fun showLoadingError() {
-        layoutError.show()
-        swipeContainer.hide()
-    }
+    override fun showLoadingError(): Unit = showContainerViews(true)
 
     override fun setMovies(movies: List<Movie>): Unit = adapter.setMovies(movies)
     //endregion
@@ -111,22 +107,35 @@ class MainActivity : AppCompatActivity(), MoviesView {
     //endregion
 
     //region Search
-    override fun showSearchProgress() {
-        progressSearch.show()
-        layoutEmpty.hide()
-    }
+    override fun showSearchProgress(): Unit = progressSearch.show()
 
     override fun hideSearchProgress(): Unit = progressSearch.becomeInvisible()
 
     override fun showSearchError() {
-        layoutEmpty.show()
+        showContainerViews(false)
         hideKeyboard()
         tvEmpty.text = getString(R.string.empty_search, searchView.query)
     }
 
     override fun setSearchResult(movies: List<Movie>) {
+        swipeContainer.show()
+        containerViews.hide()
         hideKeyboard()
         adapter.setMovies(movies)
     }
     //endregion
+
+    /**
+     * Function for showing the layout with error and empty views
+     * @param showError Flag which shows if the error view should be visible
+     */
+    private fun showContainerViews(showError: Boolean) {
+        swipeContainer.hide()
+        containerViews.show()
+        if (showError) {
+            layoutError.show()
+        } else {
+            layoutEmpty.show()
+        }
+    }
  }

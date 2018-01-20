@@ -47,14 +47,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include layout="@layout/fragment_list" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layoutProgress"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <include layout="@layout/progress_bar" />
 
-        <include layout="@layout/fragment_list" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/containerViews"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <include layout="@layout/error_view" android:visibility="gone" />
 
         <include layout="@layout/empty_search_view" android:visibility="gone" />
 
     </FrameLayout>
-
 </android.support.design.widget.CoordinatorLayout>
