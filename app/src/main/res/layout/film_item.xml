@@ -116,11 +116,10 @@
                     android:layout_toLeftOf="@id/imgBtnLike"
                     android:layout_toStartOf="@id/imgBtnLike" />
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/imgBtnLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
                     app:srcCompat="@drawable/ic_heart"
                     android:contentDescription="@string/like"
                     android:layout_alignParentRight="true"

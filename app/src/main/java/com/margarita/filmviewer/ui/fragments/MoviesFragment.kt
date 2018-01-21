@@ -40,8 +40,9 @@ class MoviesFragment : BaseFragment(), MoviesView {
                 swipeContainer.showSnackBar(movie.title!!, Snackbar.LENGTH_SHORT)
             }
 
-            override fun like(movie: Movie) {
-                //TODO
+            override fun like(id: Int, position: Int) {
+                context!!.getPreferences().like(id)
+                adapter.notifyItemChanged(position)
             }
         })
     }

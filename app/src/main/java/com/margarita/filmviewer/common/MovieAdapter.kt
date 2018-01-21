@@ -22,7 +22,7 @@ class MovieAdapter(private val movieClickListener: OnMovieClickListener)
             = MovieViewHolder(parent.inflate(R.layout.film_item))
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int): Unit
-            = holder.bind(movies[position], movieClickListener)
+            = holder.bind(movies[position], position, movieClickListener)
 
     override fun getItemCount() = movies.size
 
@@ -52,15 +52,24 @@ class MovieAdapter(private val movieClickListener: OnMovieClickListener)
         /**
          * Function for binding a movie item and showing its info
          * @param movie Movie which info will be shown
+         * @param position Movie's position in the adapter
          * @param onMovieClickListener Listener of movie click events
          */
         fun bind(movie: Movie,
+                 position: Int,
                  onMovieClickListener: OnMovieClickListener): Unit = with(itemView) {
             tvName.text = movie.title
             tvDescription.text = movie.overview
             tvDate.text = movie.releaseDate
             imageView.loadImage(itemView.context, movie.posterPath!!)
             setOnClickListener{ onMovieClickListener.onMovieClick(movie) }
+            val imageIcon =
+                    if (!context.getPreferences().isUserLiked(movie.id!!))
+                        R.drawable.ic_heart
+                    else
+                        R.drawable.ic_heart_fill
+            imgBtnLike.setImageResource(imageIcon)
+            imgBtnLike.setOnClickListener { onMovieClickListener.like(movie.id, position) }
         }
     }
 
@@ -77,8 +86,9 @@ class MovieAdapter(private val movieClickListener: OnMovieClickListener)
 
         /**
          * Function for adding a movie to favorites
-         * @param movie Movie which will be added to favorites or removed from favorites
+         * @param id Movie's ID
+         * @param position Movie's position in the adapter
          */
-        fun like(movie: Movie)
+        fun like(id: Int, position: Int)
     }
 }
