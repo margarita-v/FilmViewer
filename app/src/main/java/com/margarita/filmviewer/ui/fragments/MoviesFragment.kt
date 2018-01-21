@@ -3,11 +3,8 @@ package com.margarita.filmviewer.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.margarita.filmviewer.R
 import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
@@ -20,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 /**
  * Fragment for showing a list of movies
  */
-class MoviesFragment : Fragment(), MoviesView {
+class MoviesFragment : BaseFragment(), MoviesView {
 
     /**
      * Listener for all content loading errors
@@ -59,15 +56,7 @@ class MoviesFragment : Fragment(), MoviesView {
         private const val CLASS_CAST_MESSAGE = " must implement OnContentErrorListener"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View?
-            = container?.inflate(R.layout.fragment_list)
+    override fun getLayoutRes(): Int = R.layout.fragment_list
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

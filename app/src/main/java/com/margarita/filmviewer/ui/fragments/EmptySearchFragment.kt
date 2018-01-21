@@ -1,18 +1,14 @@
 package com.margarita.filmviewer.ui.fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.margarita.filmviewer.R
-import com.margarita.filmviewer.common.inflate
 import kotlinx.android.synthetic.main.empty_search_view.*
 
 /**
  * Fragment for showing an empty search view
  */
-class EmptySearchFragment : Fragment() {
+class EmptySearchFragment : BaseFragment() {
 
     /**
      * Search query
@@ -40,10 +36,7 @@ class EmptySearchFragment : Fragment() {
         query = arguments?.getString(QUERY_BUNDLE_KEY, "")
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View?
-            = container?.inflate(R.layout.empty_search_view)
+    override fun getLayoutRes(): Int = R.layout.empty_search_view
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
