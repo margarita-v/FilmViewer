@@ -9,7 +9,7 @@
     <dimen name="photo_margin_left">-2dp</dimen>
 
     <!-- Margin values -->
-    <dimen name="fab_margin">16dp</dimen>==
+    <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_view_width">250dp</dimen>
     <dimen name="text_view_margin_top">33dp</dimen>
     <dimen name="margin2">2dp</dimen>
