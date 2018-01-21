@@ -11,8 +11,7 @@ import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
 import com.margarita.filmviewer.mvp.view.MoviesView
-import com.margarita.filmviewer.ui.activities.MainActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.margarita.filmviewer.mvp.view.SearchingView
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
@@ -25,11 +24,6 @@ class MoviesFragment : BaseFragment(), MoviesView {
      * Listener for all activity callbacks
      */
     private lateinit var activityCallback: OnActivityCallback
-
-    /**
-     * Activity which will contain that fragment
-     */
-    private lateinit var mainActivity: MainActivity
 
     /**
      * Adapter for RecyclerView
@@ -73,7 +67,7 @@ class MoviesFragment : BaseFragment(), MoviesView {
         swipeContainer.setColorSchemeResources(R.color.colorAccent)
         swipeContainer.setOnRefreshListener {
             presenter.loadRefresh()
-            mainActivity.resetSearchView()
+            activityCallback.resetSearchView()
         }
 
         // Check if adapter has a content
@@ -86,7 +80,6 @@ class MoviesFragment : BaseFragment(), MoviesView {
         super.onAttach(context)
         try {
             activityCallback = activity as OnActivityCallback
-            mainActivity = activity as MainActivity
         } catch (e: ClassCastException) {
             throw ClassCastException(activity.toString() + CLASS_CAST_MESSAGE)
         }
@@ -122,27 +115,22 @@ class MoviesFragment : BaseFragment(), MoviesView {
     //endregion
 
     //region Search
-    override fun showSearchProgress() {
-        mainActivity.progressSearch.show()
-        mainActivity.hideKeyboard()
-    }
+    override fun showSearchProgress(): Unit = activityCallback.showSearchProgress()
 
-    override fun hideSearchProgress() {
-        mainActivity.progressSearch.becomeInvisible()
-    }
+    override fun hideSearchProgress(): Unit = activityCallback.hideSearchProgress()
 
     override fun showSearchError(): Unit = activityCallback.showSearchError()
 
     override fun setSearchResult(movies: List<Movie>) {
         adapter.setMovies(movies)
-        activityCallback.showSearchResult()
+        activityCallback.setSearchResult(movies)
     }
     //endregion
 
     /**
      * Interface for sending callbacks to the activity
      */
-    interface OnActivityCallback {
+    interface OnActivityCallback: SearchingView {
 
         /**
          * Function for showing error for the first content loading
@@ -150,13 +138,8 @@ class MoviesFragment : BaseFragment(), MoviesView {
         fun showLoadingError()
 
         /**
-         * Function for showing error for searching
+         * Function for resetting a search view to its default state
          */
-        fun showSearchError()
-
-        /**
-         * Function for showing a result of search
-         */
-        fun showSearchResult()
+        fun resetSearchView()
     }
 }

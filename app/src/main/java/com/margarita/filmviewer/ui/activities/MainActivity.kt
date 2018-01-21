@@ -9,7 +9,8 @@ import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
 
 import com.margarita.filmviewer.R
-import com.margarita.filmviewer.common.getColorResource
+import com.margarita.filmviewer.common.*
+import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.ui.fragments.EmptySearchFragment
 import com.margarita.filmviewer.ui.fragments.ErrorFragment
 import com.margarita.filmviewer.ui.fragments.MoviesFragment
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
         if (moviesFragment == null) {
             moviesFragment = MoviesFragment()
             supportFragmentManager.beginTransaction()
-                    .add(R.id.container, moviesFragment, MOVIE_FRAGMENT_TAG)
+                    .replace(R.id.container, moviesFragment, MOVIE_FRAGMENT_TAG)
                     .commit()
         } else {
             setFragment(moviesFragment!!)
@@ -65,14 +66,6 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
     }
 
     /**
-     * Function for reset the search view to its default state
-     */
-    fun resetSearchView() {
-        searchView.setQuery("", false)
-        searchView.clearFocus()
-    }
-
-    /**
      * Function which implements the fragment replacement
      * @param fragment New fragment which will be shown
      */
@@ -81,9 +74,20 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
         fragmentTransaction.replace(R.id.container, fragment).commit()
     }
 
+    //region OnActivityCallback implementation
     override fun showLoadingError(): Unit = setFragment(errorFragment)
+
+    override fun resetSearchView(): Unit = searchView.reset()
 
     override fun showSearchError(): Unit = setFragment(emptySearchFragment)
 
-    override fun showSearchResult(): Unit = setFragment(moviesFragment!!)
- }
+    override fun showSearchProgress() {
+        progressSearch.show()
+        hideKeyboard()
+    }
+
+    override fun hideSearchProgress(): Unit = progressSearch.becomeInvisible()
+
+    override fun setSearchResult(movies: List<Movie>): Unit = setFragment(moviesFragment!!)
+    //endregion
+}

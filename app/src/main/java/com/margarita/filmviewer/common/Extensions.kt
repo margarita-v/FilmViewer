@@ -8,6 +8,7 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,3 +90,11 @@ fun View.becomeInvisible() {
     visibility = View.INVISIBLE
 }
 //endregion
+
+/**
+ * Function for resetting a search view to its default state
+ */
+fun SearchView.reset() {
+    setQuery("", false)
+    clearFocus()
+}
