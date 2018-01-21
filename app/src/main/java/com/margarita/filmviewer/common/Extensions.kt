@@ -1,6 +1,5 @@
 package com.margarita.filmviewer.common
 
-import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.support.annotation.ColorRes
@@ -10,6 +9,7 @@ import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
@@ -64,13 +64,20 @@ fun View.showSnackBar(message: String, duration: Int = Snackbar.LENGTH_LONG): Un
 /**
  * Function for hiding keyboard for activity
  */
-fun Activity.hideKeyboard() {
+fun AppCompatActivity.hideKeyboard() {
     val view = currentFocus
     if (view != null) {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
+
+/**
+ * Function for checking if the activity's fragment manager
+ * contains the given fragment
+ */
+fun AppCompatActivity.containsFragment(fragment: BaseFragment): Boolean =
+        supportFragmentManager.fragments.contains(fragment)
 
 /**
  * Function for loading image to ImageView using image Uri

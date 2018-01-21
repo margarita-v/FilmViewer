@@ -3,7 +3,9 @@ package com.margarita.filmviewer.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ProgressBar
 import com.margarita.filmviewer.R
@@ -31,25 +33,35 @@ class MoviesFragment : BaseFragment(), MoviesView {
     private lateinit var activityCallback: OnActivityCallback
 
     /**
-     * Adapter for RecyclerView
+     * Listener for a movie click event
      */
-    private val adapter: MovieAdapter by lazy {
-        MovieAdapter(object: MovieAdapter.OnMovieClickListener {
-            override fun onMovieClick(movie: Movie) {
-                swipeContainer.showSnackBar(movie.title!!, Snackbar.LENGTH_SHORT)
-            }
+    private val movieClickListener = object: MovieAdapter.OnMovieClickListener {
+        override fun onMovieClick(movie: Movie) {
+            swipeContainer.showSnackBar(movie.title!!, Snackbar.LENGTH_SHORT)
+        }
 
-            override fun like(id: Int, position: Int) {
-                context!!.getPreferences().like(id)
-                adapter.notifyItemChanged(position)
-            }
-        })
+        override fun like(id: Int, position: Int) {
+            context!!.getPreferences().like(id)
+            adapter.notifyItemChanged(position)
+        }
     }
 
     /**
-     * Progress bar for a content loading animation
+     * Main adapter for RecyclerView
+     */
+    private val adapter: MovieAdapter by lazy { MovieAdapter(movieClickListener) }
+
+    /**
+     * Adapter for a search result
+     */
+    private val searchAdapter: MovieAdapter by lazy { MovieAdapter(movieClickListener) }
+
+    /**
+     * All widgets
      */
     private lateinit var progressBarLoading: ProgressBar
+    private lateinit var rvMoviesList: RecyclerView
+    private lateinit var swipeLayout: SwipeRefreshLayout
 
     companion object {
         /**
@@ -63,12 +75,14 @@ class MoviesFragment : BaseFragment(), MoviesView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         progressBarLoading = view.progressBar
+        rvMoviesList = view.rvList
+        swipeLayout = view.swipeContainer
 
-        rvList.layoutManager = LinearLayoutManager(context)
-        rvList.adapter = adapter
+        rvMoviesList.layoutManager = LinearLayoutManager(context)
+        rvMoviesList.adapter = if (searchAdapter.hasContent()) searchAdapter else adapter
 
-        swipeContainer.setColorSchemeResources(R.color.colorAccent)
-        swipeContainer.setOnRefreshListener {
+        swipeLayout.setColorSchemeResources(R.color.colorAccent)
+        swipeLayout.setOnRefreshListener {
             presenter.loadRefresh()
             activityCallback.resetSearchView()
         }
@@ -91,7 +105,12 @@ class MoviesFragment : BaseFragment(), MoviesView {
         this.presenter = presenter
     }
 
-    override fun hasContent(): Boolean = adapter.itemCount > 0
+    /**
+     * Function for checking if the search result is not empty
+     */
+    fun hasSearchedContent(): Boolean = searchAdapter.hasContent()
+
+    override fun hasContent(): Boolean = (rvList.adapter as MovieAdapter).itemCount > 0
 
     //region Loading content
     override fun showLoadingContent(): Unit = progressBarLoading.show()
@@ -100,7 +119,10 @@ class MoviesFragment : BaseFragment(), MoviesView {
 
     override fun showLoadingError(): Unit = activityCallback.showLoadingError()
 
-    override fun setMovies(movies: List<Movie>): Unit = adapter.setMovies(movies)
+    override fun setMovies(movies: List<Movie>) {
+        adapter.setMovies(movies)
+        clearSearchResult()
+    }
     //endregion
 
     //region Loading next or refreshing
@@ -115,11 +137,11 @@ class MoviesFragment : BaseFragment(), MoviesView {
     override fun addMovies(movies: List<Movie>): Unit = adapter.addMovies(movies)
 
     override fun hideRefreshing() {
-        swipeContainer.isRefreshing = false
+        swipeLayout.isRefreshing = false
     }
 
     override fun showConnectionError(messageRes: Int): Unit
-            = swipeContainer.showSnackBar(messageRes)
+            = swipeLayout.showSnackBar(messageRes)
     //endregion
 
     //region Search
@@ -130,10 +152,19 @@ class MoviesFragment : BaseFragment(), MoviesView {
     override fun showSearchError(): Unit = activityCallback.showSearchError()
 
     override fun setSearchResult(movies: List<Movie>) {
-        adapter.setMovies(movies)
+        searchAdapter.setMovies(movies)
+        rvMoviesList.adapter = searchAdapter
         activityCallback.setSearchResult(movies)
     }
     //endregion
+
+    /**
+     * Function for setting the main adapter to the RecyclerView
+     */
+    fun clearSearchResult() {
+        searchAdapter.clear()
+        rvMoviesList.adapter = adapter
+    }
 
     /**
      * Interface for sending callbacks to the activity

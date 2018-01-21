@@ -27,6 +27,16 @@ class MovieAdapter(private val movieClickListener: OnMovieClickListener)
     override fun getItemCount() = movies.size
 
     /**
+     * Function for checking if the adapter is not empty
+     */
+    fun hasContent() = itemCount > 0
+
+    /**
+     * Function for clearing of the list of movies
+     */
+    fun clear() = movies.clear()
+
+    /**
      * Function for setting a new list of movies to the adapter
      * @param movies List of movies which will be stored in the adapter
      */

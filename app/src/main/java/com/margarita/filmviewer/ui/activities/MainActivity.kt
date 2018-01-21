@@ -24,8 +24,8 @@ class MainActivity :
     /**
      * All fragments
      */
-    private var moviesFragment: MoviesFragment? = null
     private val errorFragment by lazy { ErrorFragment() }
+    private lateinit var moviesFragment: MoviesFragment
     private lateinit var emptySearchFragment: EmptySearchFragment
 
     /**
@@ -42,18 +42,27 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupSearchView()
-        moviesFragment = supportFragmentManager
-                .findFragmentByTag(MOVIE_FRAGMENT_TAG) as MoviesFragment?
+        // Try to restore fragment
+        val foundFragment = supportFragmentManager.findFragmentByTag(MOVIE_FRAGMENT_TAG)
+        moviesFragment = foundFragment as MoviesFragment? ?: MoviesFragment()
+        setContentFragment()
+        presenter = MoviesPresenter(moviesFragment)
+    }
 
-        if (moviesFragment == null) {
-            moviesFragment = MoviesFragment()
+    override fun onBackPressed() {
+        val containsEmpty = containsFragment(emptySearchFragment)
+        if (containsEmpty ||
+                containsFragment(moviesFragment) &&
+                moviesFragment.hasSearchedContent()) {
+            // Show main content
+            moviesFragment.clearSearchResult()
+            resetSearchView()
+            if (containsEmpty) {
+                setContentFragment()
+            }
+        } else {
+            super.onBackPressed()
         }
-
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.container, moviesFragment, MOVIE_FRAGMENT_TAG)
-                .commit()
-
-        presenter = MoviesPresenter(moviesFragment!!)
     }
 
     /**
@@ -88,7 +97,7 @@ class MainActivity :
      * Function for showing a fragment with a list of movies
      */
     private fun setContentFragment(): Unit
-         = supportFragmentManager.replace(CONTAINER_ID, moviesFragment!!, MOVIE_FRAGMENT_TAG)
+         = supportFragmentManager.replace(CONTAINER_ID, moviesFragment, MOVIE_FRAGMENT_TAG)
 
     override fun onRefreshClick(): Unit = setContentFragment()
 
