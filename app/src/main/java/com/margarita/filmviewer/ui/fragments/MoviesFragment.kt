@@ -74,19 +74,23 @@ class MoviesFragment : BaseFragment(), MoviesView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Initialize widgets for a later usage
         progressBarLoading = view.progressBar
         rvMoviesList = view.rvList
         swipeLayout = view.swipeContainer
 
+        // Setup RecyclerView
         rvMoviesList.layoutManager = LinearLayoutManager(context)
         rvMoviesList.adapter = if (searchAdapter.hasContent()) searchAdapter else adapter
 
+        // Setup SwipeRefreshLayout
         swipeLayout.setColorSchemeResources(R.color.colorAccent)
         swipeLayout.setOnRefreshListener {
             presenter.loadRefresh()
             activityCallback.resetSearchView()
         }
 
+        // Load content from server if adapter is empty
         if (!hasContent()) {
             presenter.loadStart()
         }
@@ -123,18 +127,6 @@ class MoviesFragment : BaseFragment(), MoviesView {
         adapter.setMovies(movies)
         clearSearchResult()
     }
-    //endregion
-
-    //region Loading next or refreshing
-    override fun showLoadingNextContent() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun hideLoadingNextContent() {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun addMovies(movies: List<Movie>): Unit = adapter.addMovies(movies)
 
     override fun hideRefreshing() {
         swipeLayout.isRefreshing = false

@@ -30,16 +30,6 @@ interface ContentView {
     fun setMovies(movies: List<Movie>)
 
     /**
-     * Show animation for a loading of the next content page
-     */
-    fun showLoadingNextContent()
-
-    /**
-     * Hide animation for a next movies loading
-     */
-    fun hideLoadingNextContent()
-
-    /**
      * Hide refreshing animation
      */
     fun hideRefreshing()
@@ -49,10 +39,4 @@ interface ContentView {
      * @param messageRes String resource ID for a message text
      */
     fun showConnectionError(@StringRes messageRes: Int)
-
-    /**
-     * Add new movies to list
-     * @param movies New movies which will be added to list
-     */
-    fun addMovies(movies: List<Movie>)
 }

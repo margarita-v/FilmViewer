@@ -54,7 +54,7 @@ class MainActivity :
         if (containsEmpty ||
                 containsFragment(moviesFragment) &&
                 moviesFragment.hasSearchedContent()) {
-            // Show main content
+            // Show the main content
             moviesFragment.clearSearchResult()
             resetSearchView()
             if (containsEmpty) {
@@ -94,11 +94,12 @@ class MainActivity :
         = supportFragmentManager.replace(CONTAINER_ID, fragment)
 
     /**
-     * Function for showing a fragment with a list of movies
+     * Function for showing the main fragment with a list of movies
      */
     private fun setContentFragment(): Unit
          = supportFragmentManager.replace(CONTAINER_ID, moviesFragment, MOVIE_FRAGMENT_TAG)
 
+    // OnRefreshClickListener implementation
     override fun onRefreshClick(): Unit = setContentFragment()
 
     //region OnActivityCallback implementation

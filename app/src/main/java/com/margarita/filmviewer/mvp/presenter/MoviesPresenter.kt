@@ -96,7 +96,6 @@ class MoviesPresenter(private val moviesView: MoviesView) {
     private fun showProgress(loadingState: LoadingState) {
         when (loadingState) {
             LoadingState.LoadingFirst -> moviesView.showLoadingContent()
-            LoadingState.LoadingNext -> moviesView.showLoadingNextContent()
             LoadingState.Searching -> moviesView.showSearchProgress()
             else -> return
         }
@@ -109,7 +108,6 @@ class MoviesPresenter(private val moviesView: MoviesView) {
     private fun hideProgress(loadingState: LoadingState) {
         when (loadingState) {
             LoadingState.LoadingFirst -> moviesView.hideLoadingContent()
-            LoadingState.LoadingNext -> moviesView.hideLoadingNextContent()
             LoadingState.Refreshing -> moviesView.hideRefreshing()
             LoadingState.Searching -> moviesView.hideSearchProgress()
         }
@@ -120,12 +118,6 @@ class MoviesPresenter(private val moviesView: MoviesView) {
      * Initial loading of the content
      */
     fun loadStart() = loadMovies(LoadingState.LoadingFirst)
-
-    /**
-     * Loading of the next content page
-     * @param pageNumber Number of page which will be loaded
-     */
-    fun loadNext(pageNumber: Int) = loadMovies(LoadingState.LoadingNext, pageNumber)
 
     /**
      * Refresh content
@@ -160,7 +152,6 @@ class MoviesPresenter(private val moviesView: MoviesView) {
     private fun onLoadingSuccess(loadingState: LoadingState, movies: List<Movie>) {
         when (loadingState) {
             LoadingState.LoadingFirst, LoadingState.Refreshing -> moviesView.setMovies(movies)
-            LoadingState.LoadingNext -> moviesView.addMovies(movies)
             LoadingState.Searching -> moviesView.setSearchResult(movies)
         }
     }
@@ -195,7 +186,6 @@ class MoviesPresenter(private val moviesView: MoviesView) {
      */
     enum class LoadingState {
         LoadingFirst,   // Initial loading of content
-        LoadingNext,    // LoadingFirst of the next content page
         Refreshing,     // Refresh content
         Searching
     }
