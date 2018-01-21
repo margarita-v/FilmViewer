@@ -21,6 +21,11 @@ import kotlinx.android.synthetic.main.fragment_list.view.*
 class MoviesFragment : BaseFragment(), MoviesView {
 
     /**
+     * Presenter of movies
+     */
+    private lateinit var presenter: MoviesPresenter
+
+    /**
      * Listener for all activity callbacks
      */
     private lateinit var activityCallback: OnActivityCallback
@@ -42,10 +47,8 @@ class MoviesFragment : BaseFragment(), MoviesView {
     }
 
     /**
-     * Presenter of movies
+     * Progress bar for a content loading animation
      */
-    val presenter by lazy { MoviesPresenter(this) }
-
     private lateinit var progressBarLoading: ProgressBar
 
     companion object {
@@ -83,6 +86,10 @@ class MoviesFragment : BaseFragment(), MoviesView {
         } catch (e: ClassCastException) {
             throw ClassCastException(activity.toString() + CLASS_CAST_MESSAGE)
         }
+    }
+
+    override fun setPresenter(presenter: MoviesPresenter) {
+        this.presenter = presenter
     }
 
     //region Loading content

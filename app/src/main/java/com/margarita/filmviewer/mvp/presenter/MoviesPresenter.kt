@@ -29,6 +29,7 @@ class MoviesPresenter(private val moviesView: MoviesView) {
 
     init {
         MainApplication.applicationComponent.inject(this)
+        moviesView.setPresenter(this)
     }
 
     //region Common functions for movies loading

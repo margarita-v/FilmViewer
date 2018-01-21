@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.margarita.filmviewer.R
 import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
+import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
 import com.margarita.filmviewer.ui.fragments.EmptySearchFragment
 import com.margarita.filmviewer.ui.fragments.ErrorFragment
 import com.margarita.filmviewer.ui.fragments.MoviesFragment
@@ -24,6 +25,11 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
     private val errorFragment by lazy { ErrorFragment() }
     private lateinit var emptySearchFragment: EmptySearchFragment
 
+    /**
+     * Presenter of movies
+     */
+    private lateinit var presenter: MoviesPresenter
+
     companion object {
         private const val MOVIE_FRAGMENT_TAG = "Movies"
     }
@@ -34,14 +40,16 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
         setupSearchView()
         moviesFragment = supportFragmentManager
                 .findFragmentByTag(MOVIE_FRAGMENT_TAG) as MoviesFragment?
+
         if (moviesFragment == null) {
             moviesFragment = MoviesFragment()
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, moviesFragment, MOVIE_FRAGMENT_TAG)
-                    .commit()
-        } else {
-            setFragment(moviesFragment!!)
         }
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.container, moviesFragment, MOVIE_FRAGMENT_TAG)
+                .commit()
+
+        presenter = MoviesPresenter(moviesFragment!!)
     }
 
     /**
@@ -58,7 +66,7 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                moviesFragment!!.presenter.loadForSearch(1, query)
+                presenter.loadForSearch(1, query)
                 emptySearchFragment = EmptySearchFragment.newInstance(query)
                 return true
             }
