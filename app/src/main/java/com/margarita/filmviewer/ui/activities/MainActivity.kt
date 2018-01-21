@@ -14,7 +14,7 @@ import com.margarita.filmviewer.ui.fragments.EmptySearchFragment
 import com.margarita.filmviewer.ui.fragments.ErrorFragment
 import com.margarita.filmviewer.ui.fragments.MoviesFragment
 
-class MainActivity : AppCompatActivity(), MoviesFragment.OnContentErrorListener {
+class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
 
     /**
      * All fragments

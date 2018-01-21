@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.ProgressBar
 import com.margarita.filmviewer.R
 import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
@@ -13,6 +14,7 @@ import com.margarita.filmviewer.mvp.view.MoviesView
 import com.margarita.filmviewer.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.android.synthetic.main.fragment_list.view.*
 
 /**
  * Fragment for showing a list of movies
@@ -20,9 +22,9 @@ import kotlinx.android.synthetic.main.fragment_list.*
 class MoviesFragment : BaseFragment(), MoviesView {
 
     /**
-     * Listener for all content loading errors
+     * Listener for all activity callbacks
      */
-    private lateinit var contentErrorListener: OnContentErrorListener
+    private lateinit var activityCallback: OnActivityCallback
 
     /**
      * Activity which will contain that fragment
@@ -49,11 +51,13 @@ class MoviesFragment : BaseFragment(), MoviesView {
      */
     val presenter by lazy { MoviesPresenter(this) }
 
+    private lateinit var progressBarLoading: ProgressBar
+
     companion object {
         /**
          * Message for a class cast exception
          */
-        private const val CLASS_CAST_MESSAGE = " must implement OnContentErrorListener"
+        private const val CLASS_CAST_MESSAGE = " must implement OnActivityCallback"
     }
 
     override fun getLayoutRes(): Int = R.layout.fragment_list
@@ -66,13 +70,14 @@ class MoviesFragment : BaseFragment(), MoviesView {
         swipeContainer.setColorSchemeResources(R.color.colorAccent)
         swipeContainer.setOnRefreshListener { presenter.loadRefresh() }
 
+        progressBarLoading = view.progressBar
         presenter.loadStart()
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         try {
-            contentErrorListener = activity as OnContentErrorListener
+            activityCallback = activity as OnActivityCallback
             mainActivity = activity as MainActivity
         } catch (e: ClassCastException) {
             throw ClassCastException(activity.toString() + CLASS_CAST_MESSAGE)
@@ -80,11 +85,11 @@ class MoviesFragment : BaseFragment(), MoviesView {
     }
 
     //region Loading content
-    override fun showLoadingContent(): Unit = progressBar.show()
+    override fun showLoadingContent(): Unit = progressBarLoading.show()
 
-    override fun hideLoadingContent(): Unit = progressBar.hide()
+    override fun hideLoadingContent(): Unit = progressBarLoading.hide()
 
-    override fun showLoadingError(): Unit = contentErrorListener.showLoadingError()
+    override fun showLoadingError(): Unit = activityCallback.showLoadingError()
 
     override fun setMovies(movies: List<Movie>): Unit = adapter.setMovies(movies)
     //endregion
@@ -118,18 +123,18 @@ class MoviesFragment : BaseFragment(), MoviesView {
         mainActivity.progressSearch.becomeInvisible()
     }
 
-    override fun showSearchError(): Unit = contentErrorListener.showSearchError()
+    override fun showSearchError(): Unit = activityCallback.showSearchError()
 
     override fun setSearchResult(movies: List<Movie>) {
-        contentErrorListener.showSearchResult()
+        activityCallback.showSearchResult()
         adapter.setMovies(movies)
     }
     //endregion
 
     /**
-     * Interface for a content loading errors handling
+     * Interface for sending callbacks to the activity
      */
-    interface OnContentErrorListener {
+    interface OnActivityCallback {
 
         /**
          * Function for showing error for the first content loading
