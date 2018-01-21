@@ -45,10 +45,10 @@ interface ContentView {
     fun hideRefreshing()
 
     /**
-     * Show message for a refreshing error
+     * Show message for a connection error
      * @param messageRes String resource ID for a message text
      */
-    fun showRefreshingError(@StringRes messageRes: Int)
+    fun showConnectionError(@StringRes messageRes: Int)
 
     /**
      * Add new movies to list

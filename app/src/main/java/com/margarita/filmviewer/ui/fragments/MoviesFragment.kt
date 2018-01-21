@@ -73,8 +73,7 @@ class MoviesFragment : BaseFragment(), MoviesView {
             activityCallback.resetSearchView()
         }
 
-        // Check if adapter has content
-        if (adapter.itemCount == 0) {
+        if (!hasContent()) {
             presenter.loadStart()
         }
     }
@@ -91,6 +90,8 @@ class MoviesFragment : BaseFragment(), MoviesView {
     override fun setPresenter(presenter: MoviesPresenter) {
         this.presenter = presenter
     }
+
+    override fun hasContent(): Boolean = adapter.itemCount > 0
 
     //region Loading content
     override fun showLoadingContent(): Unit = progressBarLoading.show()
@@ -117,7 +118,7 @@ class MoviesFragment : BaseFragment(), MoviesView {
         swipeContainer.isRefreshing = false
     }
 
-    override fun showRefreshingError(messageRes: Int): Unit
+    override fun showConnectionError(messageRes: Int): Unit
             = swipeContainer.showSnackBar(messageRes)
     //endregion
 

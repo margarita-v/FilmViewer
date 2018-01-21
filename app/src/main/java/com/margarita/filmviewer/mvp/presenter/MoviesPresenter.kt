@@ -79,7 +79,6 @@ class MoviesPresenter(private val moviesView: MoviesView) {
     private fun getMoviesObservable(loadingState: LoadingState,
                                     pageNumber: Int,
                                     query: String): Observable<FullResponse> {
-
         if (context.isOnline()) {
             return if (loadingState != LoadingState.Searching)
                 filmsApi.discoverMovie(pageNumber)
@@ -171,13 +170,25 @@ class MoviesPresenter(private val moviesView: MoviesView) {
      * @param loadingState Current loading state
      */
     private fun onLoadingFailed(loadingState: LoadingState) {
-        when (loadingState) {
-            LoadingState.LoadingFirst -> moviesView.showLoadingError()
-            LoadingState.Searching -> moviesView.showSearchError()
-            else -> moviesView.showRefreshingError(R.string.refresh_error)
+        if (moviesView.hasContent() && !context.isOnline()
+                || loadingState == LoadingState.Refreshing) {
+            // Show a simple connection error message if the device is offline
+            showConnectionError()
+        } else {
+            when (loadingState) {
+                LoadingState.LoadingFirst -> moviesView.showLoadingError()
+                LoadingState.Searching -> moviesView.showSearchError()
+                else -> return
+            }
         }
     }
     //endregion
+
+    /**
+     * Function for showing a connection error message
+     */
+    private fun showConnectionError(): Unit
+            = moviesView.showConnectionError(R.string.connection_error)
 
     /**
      * Enum for all loading states

@@ -12,4 +12,9 @@ interface MoviesView: ContentView, SearchingView {
      * @param presenter Presenter which will be set to the view
      */
     fun setPresenter(presenter: MoviesPresenter)
+
+    /**
+     * Function for checking if the view has a content
+     */
+    fun hasContent(): Boolean
 }
