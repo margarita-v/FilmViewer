@@ -25,6 +25,5 @@
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:textSize="@dimen/font_size16"
-        android:textColor="@color/colorTextInfo"
-        android:text="@string/empty_search" />
+        android:textColor="@color/colorTextInfo" />
 </RelativeLayout>

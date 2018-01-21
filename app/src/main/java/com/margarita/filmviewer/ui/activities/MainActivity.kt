@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnContentErrorListener 
      */
     private var moviesFragment: MoviesFragment? = null
     private val errorFragment by lazy { ErrorFragment() }
-    private val emptySearchFragment by lazy { EmptySearchFragment() }
+    private lateinit var emptySearchFragment: EmptySearchFragment
 
     companion object {
         private const val MOVIE_FRAGMENT_TAG = "Movies"
@@ -57,7 +57,8 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnContentErrorListener 
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                //presenter.loadForSearch(1, query)
+                moviesFragment!!.presenter.loadForSearch(1, query)
+                emptySearchFragment = EmptySearchFragment.newInstance(query)
                 return true
             }
         })
@@ -75,4 +76,6 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnContentErrorListener 
     override fun showLoadingError(): Unit = setFragment(errorFragment)
 
     override fun showSearchError(): Unit = setFragment(emptySearchFragment)
+
+    override fun showSearchResult(): Unit = setFragment(moviesFragment!!)
  }

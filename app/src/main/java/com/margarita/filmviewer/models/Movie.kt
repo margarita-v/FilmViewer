@@ -33,9 +33,11 @@ data class Movie(
 	 * Function for date parsing
 	 */
 	fun parseDate() {
-		val locale = Locale.getDefault()
-		val fromFormat = SimpleDateFormat(DEFAULT_DATE_PATTERN, locale)
-		val toFormat = SimpleDateFormat(NEW_DATE_PATTERN, locale)
-		releaseDate = toFormat.format(fromFormat.parse(releaseDate))
+		if (!releaseDate.isNullOrEmpty()) {
+			val locale = Locale.getDefault()
+			val fromFormat = SimpleDateFormat(DEFAULT_DATE_PATTERN, locale)
+			val toFormat = SimpleDateFormat(NEW_DATE_PATTERN, locale)
+			releaseDate = toFormat.format(fromFormat.parse(releaseDate))
+		}
 	}
 }

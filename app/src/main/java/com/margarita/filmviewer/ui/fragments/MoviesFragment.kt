@@ -9,9 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.margarita.filmviewer.R
-import com.margarita.filmviewer.common.MovieAdapter
-import com.margarita.filmviewer.common.inflate
-import com.margarita.filmviewer.common.showSnackBar
+import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
 import com.margarita.filmviewer.mvp.view.MoviesView
@@ -52,7 +50,7 @@ class MoviesFragment : Fragment(), MoviesView {
     /**
      * Presenter of movies
      */
-    private val presenter by lazy { MoviesPresenter(this) }
+    val presenter by lazy { MoviesPresenter(this) }
 
     companion object {
         /**
@@ -93,13 +91,9 @@ class MoviesFragment : Fragment(), MoviesView {
     }
 
     //region Loading content
-    override fun showLoadingContent() {
-        progressBar.visibility = View.VISIBLE
-    }
+    override fun showLoadingContent(): Unit = progressBar.show()
 
-    override fun hideLoadingContent() {
-        progressBar.visibility = View.GONE
-    }
+    override fun hideLoadingContent(): Unit = progressBar.hide()
 
     override fun showLoadingError(): Unit = contentErrorListener.showLoadingError()
 
@@ -127,17 +121,19 @@ class MoviesFragment : Fragment(), MoviesView {
 
     //region Search
     override fun showSearchProgress() {
-        mainActivity.progressSearch.visibility = View.VISIBLE
+        mainActivity.progressSearch.show()
+        mainActivity.hideKeyboard()
     }
 
     override fun hideSearchProgress() {
-        mainActivity.progressSearch.visibility = View.GONE
+        mainActivity.progressSearch.becomeInvisible()
     }
 
     override fun showSearchError(): Unit = contentErrorListener.showSearchError()
 
     override fun setSearchResult(movies: List<Movie>) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        contentErrorListener.showSearchResult()
+        adapter.setMovies(movies)
     }
     //endregion
 
@@ -155,5 +151,10 @@ class MoviesFragment : Fragment(), MoviesView {
          * Function for showing error for searching
          */
         fun showSearchError()
+
+        /**
+         * Function for showing a result of search
+         */
+        fun showSearchResult()
     }
 }
