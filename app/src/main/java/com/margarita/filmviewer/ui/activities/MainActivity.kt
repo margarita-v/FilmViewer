@@ -1,7 +1,6 @@
 package com.margarita.filmviewer.ui.activities
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.widget.EditText
@@ -12,11 +11,15 @@ import com.margarita.filmviewer.R
 import com.margarita.filmviewer.common.*
 import com.margarita.filmviewer.models.Movie
 import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
+import com.margarita.filmviewer.ui.fragments.BaseFragment
 import com.margarita.filmviewer.ui.fragments.EmptySearchFragment
 import com.margarita.filmviewer.ui.fragments.ErrorFragment
 import com.margarita.filmviewer.ui.fragments.MoviesFragment
 
-class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
+class MainActivity :
+        AppCompatActivity(),
+        MoviesFragment.OnActivityCallback,
+        ErrorFragment.OnRefreshClickListener {
 
     /**
      * All fragments
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
 
     companion object {
         private const val MOVIE_FRAGMENT_TAG = "Movies"
+        private const val CONTAINER_ID = R.id.container
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,10 +81,16 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
      * Function which implements the fragment replacement
      * @param fragment New fragment which will be shown
      */
-    private fun setFragment(fragment: Fragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.container, fragment).commit()
-    }
+    private fun setFragment(fragment: BaseFragment): Unit
+        = supportFragmentManager.replace(CONTAINER_ID, fragment)
+
+    /**
+     * Function for showing a fragment with a list of movies
+     */
+    private fun setContentFragment(): Unit
+         = supportFragmentManager.replace(CONTAINER_ID, moviesFragment!!, MOVIE_FRAGMENT_TAG)
+
+    override fun onRefreshClick(): Unit = setContentFragment()
 
     //region OnActivityCallback implementation
     override fun showLoadingError(): Unit = setFragment(errorFragment)
@@ -96,6 +106,6 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
 
     override fun hideSearchProgress(): Unit = progressSearch.becomeInvisible()
 
-    override fun setSearchResult(movies: List<Movie>): Unit = setFragment(moviesFragment!!)
+    override fun setSearchResult(movies: List<Movie>): Unit = setContentFragment()
     //endregion
 }

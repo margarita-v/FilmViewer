@@ -73,7 +73,7 @@ class MoviesFragment : BaseFragment(), MoviesView {
             activityCallback.resetSearchView()
         }
 
-        // Check if adapter has a content
+        // Check if adapter has content
         if (adapter.itemCount == 0) {
             presenter.loadStart()
         }

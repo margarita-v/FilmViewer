@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.support.annotation.ColorRes
+import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
+import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import com.margarita.filmviewer.ui.fragments.BaseFragment
 import com.squareup.picasso.Picasso
 
 /**
@@ -77,6 +80,14 @@ fun Activity.hideKeyboard() {
 fun ImageView.loadImage(context: Context, url: String): Unit
         = Picasso.with(context).load(url).into(this)
 
+/**
+ * Function for resetting a search view to its default state
+ */
+fun SearchView.reset() {
+    setQuery("", false)
+    clearFocus()
+}
+
 //region Function for setting visibility of views
 fun View.show() {
     visibility = View.VISIBLE
@@ -91,10 +102,30 @@ fun View.becomeInvisible() {
 }
 //endregion
 
+//region Function for a FragmentManager
 /**
- * Function for resetting a search view to its default state
+ * Function which implements a fragment replacement
+ * @param containerId ID of container view for a fragment
+ * @param fragment Fragment which will be shown
+ * @param tag Fragment's tag
  */
-fun SearchView.reset() {
-    setQuery("", false)
-    clearFocus()
+fun FragmentManager.replace(@IdRes containerId: Int,
+                            fragment: BaseFragment,
+                            tag: String) {
+    beginTransaction()
+            .replace(containerId, fragment, tag)
+            .commit()
 }
+
+/**
+ * Function which implements a simple fragment replacement without tags
+ * @param containerId ID of container view for a fragment
+ * @param fragment Fragment which will be shown
+ */
+fun FragmentManager.replace(@IdRes containerId: Int,
+                            fragment: BaseFragment) {
+    beginTransaction()
+            .replace(containerId, fragment)
+            .commit()
+}
+//endregion
