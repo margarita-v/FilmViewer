@@ -15,7 +15,6 @@ import com.margarita.filmviewer.mvp.presenter.MoviesPresenter
 import com.margarita.filmviewer.mvp.view.MoviesView
 import com.margarita.filmviewer.mvp.view.SearchingView
 import kotlinx.android.synthetic.main.fragment_list.*
-import kotlinx.android.synthetic.main.fragment_list.view.*
 
 /**
  * Fragment for showing a list of movies
@@ -42,7 +41,7 @@ class MoviesFragment : BaseFragment(), MoviesView {
 
         override fun like(id: Int, position: Int) {
             context!!.getPreferences().like(id)
-            adapter.notifyItemChanged(position)
+            getActiveAdapter().notifyItemChanged(position)
         }
     }
 
@@ -74,26 +73,23 @@ class MoviesFragment : BaseFragment(), MoviesView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Initialize widgets for a later usage
-        progressBarLoading = view.progressBar
-        rvMoviesList = view.rvList
-        swipeLayout = view.swipeContainer
+        progressBarLoading = progressBar
 
         // Setup RecyclerView
-        rvMoviesList.layoutManager = LinearLayoutManager(context)
-        rvMoviesList.adapter = if (searchAdapter.hasContent()) searchAdapter else adapter
+        rvList.layoutManager = LinearLayoutManager(context)
+        rvList.adapter = if (searchAdapter.hasContent()) searchAdapter else adapter
+        rvMoviesList = rvList
 
         // Setup SwipeRefreshLayout
-        swipeLayout.setColorSchemeResources(R.color.colorAccent)
-        swipeLayout.setOnRefreshListener {
+        swipeContainer.setColorSchemeResources(R.color.colorAccent)
+        swipeContainer.setOnRefreshListener {
             presenter.loadRefresh()
             activityCallback.resetSearchView()
         }
+        swipeLayout = swipeContainer
 
         // Load content from server if adapter is empty
-        if (!hasContent()) {
-            presenter.loadStart()
-        }
+        startLoading()
     }
 
     override fun onAttach(context: Context?) {
@@ -110,11 +106,25 @@ class MoviesFragment : BaseFragment(), MoviesView {
     }
 
     /**
+     * Function for a movies loading if adapter is empty
+     */
+    private fun startLoading() {
+        if (!hasContent()) {
+            presenter.loadStart()
+        }
+    }
+
+    /**
      * Function for checking if the search result is not empty
      */
     fun hasSearchedContent(): Boolean = searchAdapter.hasContent()
 
-    override fun hasContent(): Boolean = (rvList.adapter as MovieAdapter).itemCount > 0
+    /**
+     * Function for getting the actual adapter which is set to the RecyclerView now
+     */
+    private fun getActiveAdapter(): MovieAdapter = rvMoviesList.adapter as MovieAdapter
+
+    override fun hasContent(): Boolean = getActiveAdapter().itemCount > 0
 
     //region Loading content
     override fun showLoadingContent(): Unit = progressBarLoading.show()
@@ -156,6 +166,8 @@ class MoviesFragment : BaseFragment(), MoviesView {
     fun clearSearchResult() {
         searchAdapter.clear()
         rvMoviesList.adapter = adapter
+        // Check if the main adapter was empty before searching
+        startLoading()
     }
 
     /**

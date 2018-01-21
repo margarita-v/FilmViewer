@@ -42,14 +42,6 @@ class MovieAdapter(private val movieClickListener: OnMovieClickListener)
      */
     fun setMovies(movies: List<Movie>) {
         this.movies.clear()
-        addMovies(movies)
-    }
-
-    /**
-     * Function for addition a new list of movies to the adapter
-     * @param movies List of movies which will be added to the adapter
-     */
-    fun addMovies(movies: List<Movie>) {
         this.movies.addAll(movies)
         notifyDataSetChanged()
     }

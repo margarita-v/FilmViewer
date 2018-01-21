@@ -24,9 +24,9 @@ class MainActivity :
     /**
      * All fragments
      */
-    private val errorFragment by lazy { ErrorFragment() }
     private lateinit var moviesFragment: MoviesFragment
-    private lateinit var emptySearchFragment: EmptySearchFragment
+    private val errorFragment by lazy { ErrorFragment() }
+    private var emptySearchFragment: EmptySearchFragment? = null
 
     /**
      * Presenter of movies
@@ -50,7 +50,8 @@ class MainActivity :
     }
 
     override fun onBackPressed() {
-        val containsEmpty = containsFragment(emptySearchFragment)
+        val containsEmpty = emptySearchFragment != null
+                && containsFragment(emptySearchFragment!!)
         if (containsEmpty ||
                 containsFragment(moviesFragment) &&
                 moviesFragment.hasSearchedContent()) {
@@ -107,7 +108,7 @@ class MainActivity :
 
     override fun resetSearchView(): Unit = searchView.reset()
 
-    override fun showSearchError(): Unit = setFragment(emptySearchFragment)
+    override fun showSearchError(): Unit = setFragment(emptySearchFragment!!)
 
     override fun showSearchProgress() {
         progressSearch.show()
