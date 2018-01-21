@@ -65,6 +65,14 @@ class MainActivity : AppCompatActivity(), MoviesFragment.OnActivityCallback {
     }
 
     /**
+     * Function for reset the search view to its default state
+     */
+    fun resetSearchView() {
+        searchView.setQuery("", false)
+        searchView.clearFocus()
+    }
+
+    /**
      * Function which implements the fragment replacement
      * @param fragment New fragment which will be shown
      */

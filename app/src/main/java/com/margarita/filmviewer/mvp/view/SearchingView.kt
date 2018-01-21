@@ -5,7 +5,7 @@ import com.margarita.filmviewer.models.Movie
 /**
  * Interface for a view which implements a search of movies
  */
-interface SearchView {
+interface SearchingView {
 
     /**
      * Show animation for a search progress

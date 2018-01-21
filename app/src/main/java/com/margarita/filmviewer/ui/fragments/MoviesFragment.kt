@@ -65,14 +65,21 @@ class MoviesFragment : BaseFragment(), MoviesView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        progressBarLoading = view.progressBar
+
         rvList.layoutManager = LinearLayoutManager(context)
         rvList.adapter = adapter
 
         swipeContainer.setColorSchemeResources(R.color.colorAccent)
-        swipeContainer.setOnRefreshListener { presenter.loadRefresh() }
+        swipeContainer.setOnRefreshListener {
+            presenter.loadRefresh()
+            mainActivity.resetSearchView()
+        }
 
-        progressBarLoading = view.progressBar
-        presenter.loadStart()
+        // Check if adapter has a content
+        if (adapter.itemCount == 0) {
+            presenter.loadStart()
+        }
     }
 
     override fun onAttach(context: Context?) {
@@ -127,8 +134,8 @@ class MoviesFragment : BaseFragment(), MoviesView {
     override fun showSearchError(): Unit = activityCallback.showSearchError()
 
     override fun setSearchResult(movies: List<Movie>) {
-        activityCallback.showSearchResult()
         adapter.setMovies(movies)
+        activityCallback.showSearchResult()
     }
     //endregion
 
