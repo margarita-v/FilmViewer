@@ -106,12 +106,14 @@
                     android:textSize="@dimen/font_size14"
                     android:fontFamily="sans-serif"
                     android:textStyle="normal"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/colorDescription"
                     tools:text="1 января 2017" />
 
                 <android.support.v4.widget.Space
                     android:id="@+id/space"
-                    android:layout_width="@dimen/margin8"
+                    android:layout_width="@dimen/margin4"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/imgBtnLike"
                     android:layout_toStartOf="@id/imgBtnLike" />
