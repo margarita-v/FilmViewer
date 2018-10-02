@@ -2,6 +2,7 @@ package com.margarita.filmviewer.mock
 
 import android.content.Context
 import com.margarita.filmviewer.MainApplication
+import com.margarita.filmviewer.di.components.DaggerApplicationComponent
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
